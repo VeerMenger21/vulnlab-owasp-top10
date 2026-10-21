@@ -1,0 +1,36 @@
+# ==============================================================================
+# OWASP Juice Shop - Deliberately Vulnerable Web Application Lab Target
+# Academic Project: "Exploiting and Mitigating OWASP Top 10 Vulnerabilities"
+#
+# IMPORTANT NOTICE:
+# This container runs an intentionally vulnerable application for authorized
+# local educational security testing only. Bound strictly to localhost (127.0.0.1).
+# Do NOT expose to untrusted networks or the public internet.
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:v16.0.0
+    container_name: vulnlab-juice-shop-target
+    restart: unless-stopped
+    ports:
+      # Strictly bind to 127.0.0.1 to avoid exposing the vulnerable service to local LAN
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=unsafe
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/rest/admin/application-version', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    labels:
+      - "lab.purpose=academic-security-testing"
+      - "lab.project=owasp-top-10-juice-shop"
+      - "lab.scope=authorized-localhost-only"
+
+networks:
+  default:
+    name: vulnlab-network
