@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: #1f2b42;
+  }
+  body {
+    background-color: #06090e;
+    color: #e2e8f0;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbars for technical code panels */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f17;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2b42;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d3d5c;
+}
+
+/* Code block highlight styles */
+pre code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Print styling for final academic report */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .card-print {
+    border: 1px solid #cbd5e1 !important;
+    background: white !important;
+    color: black !important;
+  }
+}
